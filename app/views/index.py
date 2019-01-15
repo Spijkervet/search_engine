@@ -6,6 +6,6 @@ index_bp = Blueprint('index', __name__)
 
 
 @index_bp.route('/', methods=['GET'])
-@login_required
+# @login_required
 def index():
     return render_template('index.html', app_info=app_info, user=current_user)

@@ -4,7 +4,7 @@
 
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 socket.on('connect', function() {
-    socket.emit('connected', {data: 'Still connected'});
+    // socket.emit('connected', {data: 'Still connected'});
 });
 
 socket.on('pong', function() {

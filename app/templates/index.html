@@ -5,26 +5,109 @@
 {% endblock %}
 {% block content %}
 
+<style>
+.button-adjustment {
+  margin-top: 50px;
+}
 
-<div class="container">
-    <div style="padding-top:10%">
-        <div class="jumbotron">
-            <h1 class="display-3">Hello, world!</h1>
-            <p class="lead"><a href="http://getbootstrap.com">Bootstrap 4 Boilerplate</a></p>
-            <hr class="my-4">
-            <div>
-                <b>Your e-mail: {{ user.email }}</b>
-                <br>
-                <i>Project: {{ app_info.name }}</i>
-                <p>
-                    <div id="time"></div>
-                    <div id="version"></div>
-                </p>
-            </div>
+.button-adjustment button {
+  background-color: #f2f2f2;
+  color: #757575;
+  font-family: arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.search-form {
+	width: 35vw;
+}
+
+@media only screen and (max-width: 600px) {
+	.search-form {
+  		width: 90vw;
+	}
+}
+
+.btn-custom {
+background-image: -moz-linear-gradient(top,#f5f5f5,#f1f1f1);
+-moz-border-radius: 2px;
+-moz-user-select: none;
+background-color: #f2f2f2;
+border: 1px solid #f2f2f2;
+border-radius: 2px;
+color: #757575;
+cursor: pointer;
+font-family: arial,sans-serif;
+font-size: 13px;
+font-weight: bold;
+margin: 11px 4px;
+min-width: 54px;
+text-align: center;
+}
+
+.btn-custom:hover {
+	color: #757575;
+}
+
+</style>
+
+<!--
+<nav class="navbar navbar-default navbar-fixed-top navbar-transparent">
+     
+      <div class="container-fluid">
+
+          <ul class="nav navbar-nav navbar-right nav-large-font">
+            <li><a href="#">Gmail</a></li>
+            <li><a href="#">Images</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-th"></span></a></li>
+            <li><a href="#"><button class="btn btn-sign-in">Sign in</button></a></li>
+          </ul>
+
+      </div>
+      
+    </nav>
+    -->
+    <div class="container-fluid w-100">
+      <div class="h-100 d-flex justify-content-center align-items-center">
+        <div class="row">
+          <div class="text-center col-md-12">
+           
+            <!--<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo" id="google-logo">
+            -->
+              <form action="#" class="search-form">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-lg" id="gg-search">
+                  </div>  
+                </div>
+				<button type="submit" class="btn btn-primary btn-custom">Search</button>
+				<button type="submit" class="btn btn-primary btn-custom">I'm Feeling Lucky</button>
+              </form>
+          </div>
         </div>
-
+      </div>
     </div>
-</div>
+   
+<!-- 
+    <footer class="navbar navbar-default navbar-fixed-bottom">
+     
+      <div class="container-fluid">
+         
+          <ul class="nav navbar-nav">    
+            <li><a href="#">Advestising</a></li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
 
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Use Google.co.th</a></li>
+          </ul>
+        
+      </div>
+    </footer>
+-->
 <!-- BODY css / scripts -->
 {% endblock %}
