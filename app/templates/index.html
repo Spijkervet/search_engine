@@ -20,6 +20,17 @@
 
 .search-form {
 	width: 35vw;
+    margin-bottom: 15vh;
+}
+
+.home-logo-text {
+    font-size: 3.25em;
+    font-weight: 200;
+    margin-bottom: 3vh;
+}
+.p-h-logo {
+    width: 100px;
+    height: auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -70,10 +81,9 @@ text-align: center;
     <div class="container-fluid w-100">
       <div class="h-100 d-flex justify-content-center align-items-center">
         <div class="row">
-          <div class="text-center col-md-12">
-           
-            <!--<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo" id="google-logo">
-            -->
+          <div class="text-center col-md-12"> 
+            <img src="{{ url_for('static', filename='img/peng.jpg') }}" alt="Peng" class="p-h-logo">
+            <h1 class="home-logo-text">Pengu</h1>
             <form action="{{ url_for('index.handle_form')  }}" method="post" class="search-form">
                 <div class="form-group">
                   <div class="input-group">

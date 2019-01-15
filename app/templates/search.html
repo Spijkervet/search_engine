@@ -20,7 +20,19 @@
 
 .search-form {
 	width: 35vw;
+    margin: 0;
+    margin-left: 1vw;
 }
+
+.form-group {
+    margin-bottom: 0
+}
+
+.p-h-logo-small {
+    width: 50px;
+    height: auto;
+}
+
 
 @media only screen and (max-width: 600px) {
 	.search-form {
@@ -53,6 +65,18 @@ text-align: center;
     padding: 2vh
 }
 
+.url-link {
+    color: green
+}
+
+.search-result {
+    margin-bottom: 1vh
+}
+
+.search-panel {
+    margin-bottom: 5vh;
+}
+
 </style>
 
 <!--
@@ -72,29 +96,32 @@ text-align: center;
     </nav>
     -->
     <div class="container-fluid w-100 margin-top">  
-    <div class="d-flex justify-content-left">
+    <div class="search-panel d-flex justify-content-left">
         <div class="row"> 
-        <div class="text-center col-md-12">
-            <!--<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo" id="google-logo">
-            -->
-            <form action="{{ url_for('index.handle_form')  }}" method="post" class="search-form">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input type="text" name='query' class="form-control input-lg" id="gg-search">
-                  </div>  
-                </div>
-              </form>
-          </div>
+            <div class="text-center col-md-12 d-flex flex-row align-items-center">
+                <a href="/">
+                    <img src="{{ url_for('static', filename='img/peng.jpg') }}" alt="Peng" class="p-h-logo-small">
+                </a>
+                <form action="{{ url_for('index.handle_form')  }}" method="post" class="search-form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="search" name='query' class="form-control input-lg" id="gg-search">
+						</div>  
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
+    </div>
 
 
-      <div class="d-flex flex-column justify-content-left">
+    <div class="d-flex flex-column justify-content-left">
         {% for result in results %}
         <div class="search-result">
             <a href=/url?l={{ result[1] }}&i={{loop.index}}>
-                <h5>{{ result[0] }}</h3>
+                <h5>{{ result[0] }}</h5>
+                <p class='url-link'>{{ result[1] }}</p>
             </a>
+            <p>This is metadata</p>
         </div>
         {% endfor %}
       </div>
