@@ -43,4 +43,28 @@ class User(Base):
     def is_anonymous(self):
         return False
 
+class Query(Base):
+    __tablename__ = 'queries'
+
+    id = db.Column(db.Integer, primary_key=True)
+    # session = db.Column(db.String(128))
+    query = db.Column(db.String(256))
+    created = db.Column('datetime', db.DateTime, default=db.func.now())
+
+    def __init__(self, query):
+        self.query = query
+
+
+class Click(Base):
+    __tablename__ = 'clicks'
+
+    id = db.Column(db.Integer, primary_key=True)
+    # session = db.Column(db.String(128))
+    query_idx = db.Column(db.Integer)
+    url = db.Column(db.String(256))
+
+    def __init__(self, query_idx, url):
+        self.query_idx = query_idx
+        self.url = url
+
 Base.metadata.create_all(bind=engine)

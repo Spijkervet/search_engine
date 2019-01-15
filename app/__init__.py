@@ -6,6 +6,7 @@ Janne Spijkervet, 2017
 from flask import Flask
 from flask_socketio import SocketIO
 from .info import Info
+from .log import Log
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -18,6 +19,7 @@ socketio = SocketIO()
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
+log = Log(db)
 
 def create_app(DB_PATH):
     from . import events
