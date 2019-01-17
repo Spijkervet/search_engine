@@ -66,7 +66,17 @@ text-align: center;
 }
 
 .url-link {
-    color: green
+	font-style: normal;
+	font-size: 0.8em;
+    color: green;
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 40vw;
+}
+
+.url-link:hover {
+	text-decoration: none;
 }
 
 .search-result {
@@ -77,6 +87,22 @@ text-align: center;
     margin-bottom: 5vh;
 }
 
+.result-title {
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	max-width: 50vw;           
+}
+
+.subtext {
+    max-width: 25vw;
+    font-size: 0.75em;
+}
+
+.score {
+    font-size: 0.75em;
+    font-weight: 200
+}
 </style>
 
 <!--
@@ -113,15 +139,23 @@ text-align: center;
         </div>
     </div>
 
-
     <div class="d-flex flex-column justify-content-left">
         {% for result in results %}
         <div class="search-result">
-            <a href=/url?l={{ result[1] }}&i={{loop.index}}>
-                <h5>{{ result[0] }}</h5>
-                <p class='url-link'>{{ result[1] }}</p>
-            </a>
-            <p>This is metadata</p>
+            <div>
+                <a href=/url?l={{ result.doc.url }}&i={{loop.index}}>
+                    <h5 class="result-title">{{ result.doc.title }}</h5>
+                    <div class='url-link'>
+					    <cite>{{ result.doc.url }}</cite>
+            	    </div>
+			    </a>
+            </div>
+            <div class="subtext">
+                <span>{{ result.doc.description[:150] }}</span>
+            </div>
+            <div class="score">
+                <span>{{ '{0:0.3f}'.format(result.score) }}</span>
+            </div>
         </div>
         {% endfor %}
       </div>

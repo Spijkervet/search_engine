@@ -2,8 +2,7 @@ from flask import render_template, Blueprint
 from flask_login import login_required, current_user
 from .. import app_info
 from flask import request, redirect, url_for
-
-from gsearch.googlesearch import search as gsearch
+from ..search import search as gsearch
 from .. import log
 
 index_bp = Blueprint('index', __name__)
