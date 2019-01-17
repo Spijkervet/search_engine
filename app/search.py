@@ -5,7 +5,7 @@ db = client["searchengine"]
 crawler = db['crawler']
 crawler.create_index([('title', 'text')])
 
-arxiv = db['arxiv']
+arxiv = db['metadata']
 index = db['index']
 
 from nltk.tokenize import RegexpTokenizer
@@ -30,8 +30,8 @@ def search(query):
     result_docs = []
     for d in docs:
         keys.append(d)
-        result = arxiv.find_one({'_id': ObjectId(d)})
-        result_docs.append(result['description'][0])
+        result = arxiv.find_one({'_id': d})
+        result_docs.append(result['abstract'])
 
     vectorizer = TfidfVectorizer()
 
@@ -39,26 +39,22 @@ def search(query):
     q = vectorizer.transform(q)
     sim = pairwise_distances(r, q)
 
-    print(len(keys), len(sim))
     ranking = []
     for k, s in zip(keys, sim):
-        doc = arxiv.find_one({'_id': ObjectId(k)})
+        doc = arxiv.find_one({'_id': k})
         ranking.append([doc, s[0]])
 
     ranking = sorted(ranking, key=lambda x: x[1])
-    print(ranking)
     final_ranking = []
     for r in ranking:
         d = {}
         d['doc'] = {
-                'author': r[0]['author'],
-                'date': r[0]['date'],
-                'description': r[0]['description'][0],
-                'comment': r[0]['description'][0],
-                'title': r[0]['title'][0],
-                'subject': r[0]['subject'],
-                'type': r[0]['type'],
-                'url': r[0]['url'][0]
+                'authors': r[0]['authors'],
+                'date': r[0]['info']['created'],
+                'description': r[0]['abstract'],
+                'title': r[0]['title'],
+                'categories': r[0]['categories'],
+                'url': 'https://arxiv.org/abs/' + r[0]['_id']
         }
         d['score'] = r[1]
         final_ranking.append(d)

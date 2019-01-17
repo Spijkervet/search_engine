@@ -14,11 +14,11 @@ def add_index(tokens, doc):
         pass
     index.update_many({'word': {'$in': list(tokens) }}, {'$push': {'doc': doc}}, upsert=True)
 
-arxiv_coll = db['arxiv']
+arxiv_coll = db['metadata']
 cursor = arxiv_coll.find({})
 for document in cursor:
     doc = document['_id']
-    desc = document['description'][0]
-    tokens = tokenizer.tokenize(desc)
+    desc = document['abstract']
+    tokens = [t.lower() for t in tokenizer.tokenize(desc)]
     tokens = {word for word in tokens if word not in stopwords.words('english')}
     add_index(tokens, doc)
