@@ -24,6 +24,14 @@
     margin-left: 1vw;
 }
 
+.search-url {
+	text-decoration: none;
+}
+
+.search-url a {
+	text-decoration: underline;
+}
+
 .form-group {
     margin-bottom: 0
 }
@@ -76,11 +84,21 @@ text-align: center;
 }
 
 .url-link:hover {
-	text-decoration: none;
+	text-decoration: none !important;
 }
 
 .search-result {
-    margin-bottom: 1vh
+    margin-bottom: 2.5vh
+}
+
+.search-result {
+  transition: box-shadow .3s;
+  border-radius:10px;
+  background: #fff;
+  padding: 1em; 
+}
+.search-result:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.1); 
 }
 
 .search-panel {
@@ -95,13 +113,21 @@ text-align: center;
 }
 
 .subtext {
-    max-width: 25vw;
+    max-width: 50vw;
     font-size: 0.75em;
 }
 
-.score {
+.subdetails {
     font-size: 0.75em;
-    font-weight: 200
+    font-weight: 200;
+}
+
+.score {
+}
+
+.authors {
+    font-size: 0.9em;
+    font-weight: 200;
 }
 </style>
 
@@ -131,7 +157,7 @@ text-align: center;
                 <form action="{{ url_for('index.handle_form')  }}" method="post" class="search-form">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="search" name='query' class="form-control input-lg" id="gg-search">
+                            <input type="text" name='query' class="form-control input-lg" id="gg-search" autofocus value="{{q}}" onfocus="var temp_value=this.value; this.value=''; this.value=temp_value" >
 						</div>  
                     </div>
                 </form>
@@ -140,21 +166,39 @@ text-align: center;
     </div>
 
     <div class="d-flex flex-column justify-content-left">
+		{% if not results %}
+			<div class="no-results">
+				<h5> No results</h5>
+			</div>
+		{% endif %}
+
         {% for result in results %}
         <div class="search-result">
-            <div>
-                <a href=/url?l={{ result.doc.url }}&i={{loop.index}}>
-                    <h5 class="result-title">{{ result.doc.title }}</h5>
-                    <div class='url-link'>
-					    <cite>{{ result.doc.url }}</cite>
-            	    </div>
+            <div class="search-url">
+                <a href=/url?l={{ result.url }}&i={{loop.index}}>
+                    <h5 class="result-title">{{ result.title }}</h5>
 			    </a>
+                <div class='url-link'>
+					<cite>{{ result.url }}</cite>
+            	</div>
+                <div class='authors'>
+                    {% for a in result.authors %}
+                    <a href='/search?author={{a.name}}' class='author-url'>{{ a.name }}</a>
+                    {% endfor %}
+                </div>
             </div>
             <div class="subtext">
-                <span>{{ result.doc.description[:150] }}</span>
+                <span>{{ result.abstract[:250] }}</span>
             </div>
-            <div class="score">
-                <span>{{ '{0:0.3f}'.format(result.score) }}</span>
+            <div class="subdetails">
+                <div class="categories">
+                    {% for c in result.categories %}
+                    <span>{{ c }}</span>
+                    {% endfor %}
+                </div>
+                <div class="score">
+                    <span>{{ '{0:0.3f}'.format(result.score) }}</span>
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -183,4 +227,16 @@ text-align: center;
     </footer>
 -->
 <!-- BODY css / scripts -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+
+    });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+
+
 {% endblock %}

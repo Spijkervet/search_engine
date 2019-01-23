@@ -60,6 +60,12 @@ text-align: center;
 	color: #757575;
 }
 
+.advanced-search {
+	position: absolute;
+	width: 100%;	
+	margin-top: 10vh;
+}
+
 </style>
 
 <!--
@@ -87,12 +93,26 @@ text-align: center;
             <form action="{{ url_for('index.handle_form')  }}" method="post" class="search-form">
                 <div class="form-group">
                   <div class="input-group">
-                    <input type="text" name='query' class="form-control input-lg" id="gg-search">
+                    <input type="text" name='query' class="form-control input-lg" id="gg-search" autofocus>
                   </div>  
                 </div>
 				<button type="submit" class="btn btn-primary btn-custom" name="search_button">Search</button>
 				<button type="submit" class="btn btn-primary btn-custom" name="lucky_button">I'm Feeling Lucky</button>
-              </form>
+            
+				<div class="advanced-search">
+					<a class="" data-toggle="collapse" href="#advancedSearch" role="button" aria-expanded="false" aria-controls="advancedSearch">Advanced Search</a>
+					<div class="collapse" id="advancedSearch"> 
+						<div class="form-group">
+							<label for="topLevelCategories">Subjects</label>
+							<select multiple class="form-control" id="topLevelCategories" name="top_level_cat">
+								{% for category in top_level_cat %}
+									<option>{{ category }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+				</div> 
+            </form>
           </div>
         </div>
       </div>

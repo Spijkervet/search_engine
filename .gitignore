@@ -62,3 +62,6 @@ target/
 *.sql
 *.sqlite
 *.db
+
+*.xml
+*.p

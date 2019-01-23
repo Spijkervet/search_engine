@@ -10,7 +10,7 @@ from .log import Log
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-
+from .config import Config
 
 __version__ = '1.0.0'
 
@@ -20,10 +20,12 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 log = Log(db)
+config = Config()
 
-def create_app(DB_PATH):
+def create_app(BASE_DIR, DB_PATH):
     from . import events
 
+    app_info.base_path = BASE_DIR
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + DB_PATH
     app.config['SECRET_KEY'] = 'Aqewur381!%*'
