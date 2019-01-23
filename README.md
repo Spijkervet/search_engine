@@ -1,4 +1,2 @@
-Flask SocketIO Bootstrap 4 Boilerplate for Python 3
+Search Engine for Arxiv submissions
 ==============
-
-Boilerplate Flask webserver with integrated Socket.IO and Bootstrap 4.
