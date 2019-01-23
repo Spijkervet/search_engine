@@ -1,16 +1,16 @@
-import pymongo
+# import pymongo
 import numpy as np
 
 from app.models import TfidfVector
 from . import config
 
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["searchengine"]
-crawler = db['crawler']
-crawler.create_index([('title', 'text')])
+# client = pymongo.MongoClient("mongodb://localhost:27017/")
+# db = client["searchengine"]
+# crawler = db['crawler']
+# crawler.create_index([('title', 'text')])
 
-arxiv = db['metadata']
-index = db['index']
+# arxiv = db['metadata']
+# index = db['index']
 
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
@@ -24,6 +24,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from elasticsearch import Elasticsearch
 es = Elasticsearch()
 
+import nltk
+nltk.download('stopwords')
 
 WORD_ID = '_id'
 LIMIT = 25

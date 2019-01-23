@@ -7,7 +7,6 @@ import logging
 import argparse
 import json
 
-import pymongo
 import requests
 from lxml import etree
 import dateutil.parser
@@ -130,7 +129,7 @@ def parse_metadata_arXivRaw(record_element):
     }
 
 
-def collect_metadata(metadata_collection, metadata_dir):
+def collect_metadata(metadata_dir):
 
     """
     logger.info('Start reading arXiv metadata')
@@ -174,7 +173,7 @@ def collect_metadata(metadata_collection, metadata_dir):
     """
     logger.info('Start reading arXiv metadata')
 
-    next_metadata_file_id = 0
+    next_metadata_file_id = 300
     docs = []
     while True:
         filename = os.path.join(
@@ -245,23 +244,13 @@ if __name__ == '__main__':
     parser.add_argument('--write-jsonlines-file', type=argparse.FileType('w'))
     args = parser.parse_args()
 
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    arxiv_db = client["searchengine"]
-    collection_name = 'metadata'
-
-    if args.drop_collection:
-        arxiv_db.drop_collection(collection_name)
-    metadata_collection = arxiv_db[collection_name]
-
     if args.read_metadata_dir:
         collect_metadata(
-            metadata_collection,
             metadata_dir=args.read_metadata_dir,
         )
 
     if args.write_jsonlines_file:
         write_to_jsonlines_file(
-            metadata_collection,
             args.write_jsonlines_file,
         )
 
