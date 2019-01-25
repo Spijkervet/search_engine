@@ -16,10 +16,13 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 
 from bson.objectid import ObjectId
+
+'''
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.metrics.pairwise import cosine_similarity
+'''
 
 from elasticsearch import Elasticsearch
 import os
@@ -35,7 +38,7 @@ WORD_ID = '_id'
 LIMIT = 25
 tokenizer = RegexpTokenizer(r'\w+')
 
-tfidf_vector = TfidfVector()
+# tfidf_vector = TfidfVector()
 
 def process_query(query):
     q = tokenizer.tokenize(query)
