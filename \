@@ -25,7 +25,7 @@ from elasticsearch import Elasticsearch
 import os
 
 ES_URL = os.getenv('ELASTIC_SEARCH_URL', None)
-print('ELASTIC SEARCH URL', ES_URL)
+print(ES_URL)
 es = Elasticsearch(ES_URL)
 
 import nltk
