@@ -8,3 +8,5 @@ services:
     - ELASTIC_SEARCH_URL=${ELASTIC_SEARCH_URL}
     ports:
      - "5000:5000"
+    volumes:
+    - ./web:/web
