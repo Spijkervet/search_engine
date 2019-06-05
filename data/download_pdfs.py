@@ -4,6 +4,7 @@ import pickle
 import shutil
 import random
 from  urllib.request import urlopen
+import time
 
 from multiprocessing.pool import ThreadPool
 
@@ -32,6 +33,7 @@ def fetch_pdf(pdf):
     fname = pdf.fname
     numtot += 1
     # try retrieve the pdf
+    error = 0
     try:
         if not basename in have:
             print('fetching %s into %s' % (pdf_url, fname))
@@ -42,28 +44,40 @@ def fetch_pdf(pdf):
         else:
             print('%s exists, skipping' % (fname, ))
         numok+=1
-        print('%d/%d of %d downloaded ok.' % (numok, numtot, len(db)))
+        print('%d/%d of %d downloaded ok.' % (numok, numtot, len(db) - len(have)))
     except Exception as e:
         print('error downloading: ', pdf_url)
         print(e)
-    return fname
+        error = 1
+    return fname, error
+
+
+def main():
+    pdf_links = get_urls(db)
+    results = ThreadPool(4).imap_unordered(fetch_pdf, pdf_links)
+    err = 0
+    for path, error in results:
+        if not error:
+            print('downloaded', path)
+        else:
+            err = 1
+            break
+
+    if err:
+        # 5 min sleep
+        print('ERROR, SLEEPING')
+        time.sleep(30)
+        main()
+    print('final number of papers downloaded okay: %d/%d' % (numok, len(db)))
+
 
 
 
 if __name__ == '__main__':
+    numok = 0
+    numtot = 0
     timeout_secs = 10 # after this many seconds we give up on a paper
     if not os.path.exists('pdf'): os.makedirs('pdf')
     have = set(os.listdir('pdf')) # get list of all pdfs we already have
-
-    numok = 0
-    numtot = 0
     db = pickle.load(open('papers.p', 'rb'))
-
-    pdf_links = get_urls(db)
-    fetch_pdf(pdf_links[0])
-    results = ThreadPool(12).imap_unordered(fetch_pdf, pdf_links)
-    for path in results:
-        print(path)
-
-    print('final number of papers downloaded okay: %d/%d' % (numok, len(db)))
-
+    main()
